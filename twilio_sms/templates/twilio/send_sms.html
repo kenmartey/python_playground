@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <link rel="stylesheet" href="bootsnipp.css"></link> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    <title>Send sms using twilio</title>
+</head>
+<body>
+<div class="container">
+<div class="col-md-6 offset-md-3">
+	<br>
+	<h3>Send sms using twilio api</h3>
+	<br>
+
+    <div class="form-group"> {% csrf_token %}
+    	<div>
+    	<label>Enter your message</label> <br>
+        <textarea id="text_message" type="textarea" class="form-control" name="text_message"></textarea>
+        </div>
+        <br>
+        <button id="send_message" class="btn btn-primary">Send message</button>
+    </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+<!-- <script src="bootsnipp.js"></script> -->
+
+<script type="text/javascript">
+  $("#send_message").click(function(e) {
+    e.preventDefault();
+    $("#send_message").html("Sending Message ...")
+    var message_body = $('#text_message').val();
+    csrftoken = $("input[name*='csrfmiddlewaretoken']").val();
+    $.ajax({
+	url: '/twilio/send-sms',
+		type: "POST", // http method
+		data: {
+			csrfmiddlewaretoken: csrftoken,
+			message_body: message_body 
+			
+		}, // data sent with the post request
+
+		// handle a successful response
+            success : function(response) {
+            $("#send_message").html("Send message")
+            $('#text_message').val("")
+
+            },
+            error : function(xhr, status, error) {
+            console.log("there is an error" + xhr.error);
+            alert("Oopps! something went wrong"); 
+            $("#send_message").html("Send message")
+                
+            }
+	});
+});
+</script>
+</body>
+</html>
