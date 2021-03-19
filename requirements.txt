@@ -13,7 +13,7 @@ django-cors-headers==2.1.0
 django-rest-swagger==2.1.2
 django-suit==0.2.25
 django-toolbelt==0.0.1
-djangorestframework==3.7.7
+djangorestframework==3.11.2
 enum34==1.1.6
 gunicorn==19.7.1
 idna==2.6
